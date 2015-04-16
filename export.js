@@ -103,7 +103,11 @@ Avatar = {
           // Then add the relative path to the server's base URL
           defaultUrl = Meteor.absoluteUrl() + defaultUrl;
         }
-        url = getGravatarUrl(user, defaultUrl);
+        // If it's local avoid gravatar
+        if (Meteor.absoluteUrl() === 'http://localhost:3000/')
+          url = defaultUrl;
+        else
+          url = getGravatarUrl(user, defaultUrl);
       }
     }
 
