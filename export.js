@@ -26,7 +26,11 @@ Avatar = {
 
     // This property on the user object will be used for retrieving gravatars
     // (useful when user emails are not published).
-    emailHashProperty: ''
+    emailHashProperty: '',
+
+    // Enable Gravatar, if you are using a local server, the default value is
+    // false, otherwise is true
+    gravatarEnabled: Meteor.absoluteUrl() !== 'http://localhost:3000/'
   },
 
   // Get the initials of the user
@@ -103,11 +107,11 @@ Avatar = {
           // Then add the relative path to the server's base URL
           defaultUrl = Meteor.absoluteUrl() + defaultUrl;
         }
-        // If it's local avoid gravatar
-        if (Meteor.absoluteUrl() === 'http://localhost:3000/')
-          url = defaultUrl;
-        else
+
+        if (Avatar.options.gravatarEnabled)
           url = getGravatarUrl(user, defaultUrl);
+        else
+          url = defaultUrl;
       }
     }
 
